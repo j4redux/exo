@@ -56,6 +56,15 @@ export async function registerExoTools(
   context: TurnContext,
 ): Promise<void> {
   registerBuiltInTools(tools, context, builtInToolNames(context));
+  await registerExoAgentTools(tools, context);
+}
+
+// Everything except built-ins, for executors whose runtime brings its own
+// shell (see coding-executor-harness).
+export async function registerExoAgentTools(
+  tools: HarnessToolRegistry,
+  context: TurnContext,
+): Promise<void> {
   registerSchedulerTools(tools);
   registerAdapterTools(tools);
   registerIntrospectionTools(tools);
